@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "101750825385",
+    "project_id": "cartradehubapp",
+    "storage_bucket": "cartradehubapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101750825385:android:e16b2e54ec47510ec4e4b8",
+        "android_client_info": {
+          "package_name": "com.example.car_trade_hub_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfDPnJJtMNvYIYR_s-CUeul839EtEqWAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

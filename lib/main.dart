@@ -1,6 +1,20 @@
+import 'package:car_trade_hub_app/firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'constants/constantColors.dart';
+import 'screens/splashScreens/splashScreen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseAuth.instance.idTokenChanges().listen((User? user) {
+    if (user == null) {
+      debugPrint('User is currently signed out!');
+    } else {
+      debugPrint('User is signed in!');
+    }
+  });
   runApp(const MainApp());
 }
 
@@ -9,12 +23,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        scaffoldBackgroundColor: ConstantColors.generalBgColor,
       ),
+      home: const SplashScreen(),
     );
   }
 }
