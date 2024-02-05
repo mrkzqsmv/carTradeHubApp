@@ -15,6 +15,12 @@ class AnounceTextFormFieldWidget extends StatelessWidget {
       child: TextFormField(
         style: const TextStyle(color: Colors.red),
         controller: controller,
+        validator: (value) {
+          if (value == null && value!.isEmpty) {
+            return 'Please fill the gap';
+          }
+          return null;
+        },
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: ConstantStyles.hintTextStyle,

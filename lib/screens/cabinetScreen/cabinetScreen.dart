@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:car_trade_hub_app/screens/homeScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import '../../constants/constantStyles.dart';
 import '../../widgets/splashScreenWidgets/splashScreenNextBtn.dart';
 import '../loginScreens/loginScreen.dart';
 import '../registerScreens/registerScreen.dart';
+import 'completeProfileScreen.dart';
 
 class CabinetScreen extends StatefulWidget {
   const CabinetScreen({super.key});
@@ -67,10 +69,11 @@ class _CabinetScreenState extends State<CabinetScreen> {
                   ),
                   child: profileImageBase64 != null
                       ? Image.memory(
-                        base64Decode(profileImageBase64!),
-                        width: 200,
-                        height: 200,
-                      )
+                          base64Decode(profileImageBase64!),
+                          width: 200,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        )
                       : SvgPicture.asset('assets/svg/userSvg.svg'),
                 ),
               ),
@@ -113,6 +116,17 @@ class _CabinetScreenState extends State<CabinetScreen> {
                     } catch (e) {
                       debugPrint('FAILED DELETED ACCOUNT $e');
                     }
+                  }),
+              const SizedBox(height: 10),
+              SplashScreenNextBtn(
+                  btnText: 'Complete your profile',
+                  btnFunc: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const CompleteProfile(),
+                      ),
+                    );
                   }),
             ],
           ),

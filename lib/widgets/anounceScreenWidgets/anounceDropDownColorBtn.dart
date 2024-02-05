@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/carColorProvider.dart';
 
 class AnounceDropDownBtn extends StatefulWidget {
   const AnounceDropDownBtn({super.key});
@@ -24,6 +27,8 @@ class _AnounceDropDownBtnState extends State<AnounceDropDownBtn> {
   ];
   @override
   Widget build(BuildContext context) {
+    final colorProvider = Provider.of<CarColorProvider>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: DropdownButtonFormField<String>(
@@ -43,7 +48,7 @@ class _AnounceDropDownBtnState extends State<AnounceDropDownBtn> {
         }).toList(),
         onChanged: (String? newValue) {
           setState(() {
-            selectedColor = newValue!;
+            colorProvider.updateSelectedColor(newValue);
           });
         },
       ),

@@ -28,6 +28,12 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
         style: const TextStyle(color: Colors.red),
         controller: widget.controller,
         obscureText: widget.isPassword ? isObsecure : false,
+        validator: (value) {
+          if (value == null && value!.isEmpty) {
+            return 'Please fill the gap';
+          }
+          return null;
+        },
         decoration: InputDecoration(
           hintText: widget.hintText,
           hintStyle: ConstantStyles.hintTextStyle,

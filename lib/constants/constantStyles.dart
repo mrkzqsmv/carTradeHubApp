@@ -48,4 +48,10 @@ class ConstantStyles {
       color: ConstantColors.mainColor,
       fontSize: 20,
       fontWeight: FontWeight.bold);
+
+  //Expansion tile title style in more screen
+  static TextStyle tileStyle = GoogleFonts.agdasima(
+      color: ConstantColors.greyColor,
+      fontSize: 20,
+      fontWeight: FontWeight.bold);
 }
