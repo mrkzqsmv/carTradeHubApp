@@ -1,11 +1,9 @@
 import 'package:car_trade_hub_app/constants/constantColors.dart';
 import 'package:car_trade_hub_app/constants/constantStyles.dart';
-import 'package:car_trade_hub_app/screens/cabinetScreen/cabinetScreen.dart';
 import 'package:car_trade_hub_app/screens/homeScreen.dart';
 import 'package:car_trade_hub_app/widgets/loginScreenWidgets/textFormFieldWidget.dart';
 import 'package:car_trade_hub_app/widgets/splashScreenWidgets/splashScreenNextBtn.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_picker_plus/date_picker_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
