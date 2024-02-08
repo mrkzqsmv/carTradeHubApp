@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 class CarImgWidget extends StatelessWidget {
   final String base64Image;
-  const CarImgWidget({super.key, required this.base64Image});
+  final int heightSize;
+  const CarImgWidget({super.key, required this.base64Image, required this.heightSize});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class CarImgWidget extends StatelessWidget {
 
     return Image.memory(
       Uint8List.fromList(bytes),
-      height: MediaQuery.of(context).size.height / 10,
+      height: MediaQuery.of(context).size.height / heightSize,
       fit: BoxFit.cover,
     );
   }

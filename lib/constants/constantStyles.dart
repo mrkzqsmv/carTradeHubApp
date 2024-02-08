@@ -54,4 +54,14 @@ class ConstantStyles {
       color: ConstantColors.greyColor,
       fontSize: 20,
       fontWeight: FontWeight.bold);
+
+  //Title style in favourite screen
+  static TextStyle titleTextStyle = GoogleFonts.agdasima(
+      color: ConstantColors.mainColor,
+      fontSize: 25,
+      fontWeight: FontWeight.bold);
+
+  //Text style in favourite screen
+  static TextStyle favouriteTextStyle = GoogleFonts.agdasima(
+      color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold);
 }
