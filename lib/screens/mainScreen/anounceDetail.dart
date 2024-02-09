@@ -2,6 +2,7 @@
 import 'package:car_trade_hub_app/models/favouriteAnounceModel.dart';
 import 'package:car_trade_hub_app/providers/favouriteAnounceProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart' as launcher;
@@ -26,6 +27,7 @@ class AnounceDetailScreen extends StatefulWidget {
 class _AnounceDetailScreenState extends State<AnounceDetailScreen> {
   bool isZoomed = false;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,10 +50,10 @@ class _AnounceDetailScreenState extends State<AnounceDetailScreen> {
 
                 await firestore
                     .collection('favourites')
-                    .doc(widget.userID)
+                    .doc(auth.currentUser!.uid)
                     .set({
-                  'userId': widget.userID,
                   'anounceId': widget.userID,
+                  'userId': widget.userID,
                 });
               },
               icon: const Icon(Icons.favorite_outline_rounded),

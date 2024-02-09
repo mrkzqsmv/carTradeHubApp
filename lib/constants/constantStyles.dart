@@ -64,4 +64,8 @@ class ConstantStyles {
   //Text style in favourite screen
   static TextStyle favouriteTextStyle = GoogleFonts.agdasima(
       color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold);
+
+  //Search bar hint style in main and favourite screens
+  static TextStyle searchBarHintStyle = GoogleFonts.agdasima(
+      color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold);
 }

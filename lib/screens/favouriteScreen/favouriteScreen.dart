@@ -1,129 +1,98 @@
-import 'package:car_trade_hub_app/providers/favouriteAnounceProvider.dart';
 import 'package:car_trade_hub_app/widgets/mainScreenWidgets/carImgWIdget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import '../../constants/constantColors.dart';
 import '../../constants/constantStyles.dart';
+import '../../widgets/mainScreenWidgets/searchBarWidget.dart';
 
-class FavouriteScreen extends StatelessWidget {
+class FavouriteScreen extends StatefulWidget {
   const FavouriteScreen({super.key});
 
   @override
+  State<FavouriteScreen> createState() => _FavouriteScreenState();
+}
+
+class _FavouriteScreenState extends State<FavouriteScreen> {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  final TextEditingController favouriteCarController = TextEditingController();
+
+  @override
+  void dispose() {
+    favouriteCarController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: ConstantColors.generalBgColor,
           elevation: 0,
           title: Text(
-            'Favourite',
+            'Favourites',
             style: ConstantStyles.appBarTitleStyle,
           ),
           centerTitle: true,
         ),
-        body: StreamBuilder(
-          stream: firestore.collection('favourites').snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            }
-
-            if (snapshot.hasError) {
-              return Text('ERROR SNAPSHOT ${snapshot.error}');
-            }
-
-            final favouritesDocs = snapshot.data!.docs;
-            return ListView.builder(
-              itemCount: favouritesDocs.length,
-              itemBuilder: (context, index) {
-                final favourite = favouritesDocs[index];
-                final userId = favourite['userId'];
-                final anounceId = favourite['anounceId'];
-                return FutureBuilder(
-                    future:
-                        firestore.collection('allAnounces').doc(userId).get(),
-                    builder: (context,
-                        AsyncSnapshot<DocumentSnapshot> anounceSnapshot) {
-                      if (anounceSnapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      }
-                      if (anounceSnapshot.hasError) {
-                        return Text(
-                            'Bir hata oluştu: ${anounceSnapshot.error}');
-                      }
-
-                      final anounceData = anounceSnapshot.data!;
-
-                      return Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border:
-                                Border.all(color: ConstantColors.mainColor)),
-                        child: Row(
-                          children: [
-                            const SizedBox(width: 15),
-                            SizedBox(
-                              width: 150,
-                              height: 150,
-                              child: CarImgWidget(
-                                  base64Image: anounceData['carImg'],
-                                  heightSize: 4),
-                            ),
-                            const SizedBox(width: 30),
-                            SizedBox(
-                              width: 100,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    anounceData['carBrand'],
-                                    style: ConstantStyles.titleTextStyle,
-                                  ),
-                                  Text(
-                                    anounceData['carModel'],
-                                    style: ConstantStyles.favouriteTextStyle,
-                                  ),
-                                  Text(
-                                    anounceData['carYear'].toString(),
-                                    style: ConstantStyles.favouriteTextStyle,
-                                  ),
-                                  Text(anounceData['carMilage'],
-                                      style: ConstantStyles.favouriteTextStyle),
-                                  Text(anounceData['carLoc'],
-                                      style: ConstantStyles.favouriteTextStyle),
-                                  Text(anounceData['carColor'],
-                                      style: ConstantStyles.favouriteTextStyle),
-                                  Text(anounceData['carPrice'],
-                                      style: ConstantStyles.favouriteTextStyle),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: 30),
-                            IconButton(
-                                onPressed: () async {
-                                  firestore
-                                      .collection('favourites')
-                                      .doc(userId)
-                                      .delete();
-                                },
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: ConstantColors.mainColor,
-                                  size: 25,
-                                ))
-                          ],
-                        ),
+        body: Column(
+          children: [
+            const SizedBox(height: 10),
+            SearchBarWidget(
+                hintText: 'Search cars', controller: favouriteCarController),
+            const SizedBox(height: 10),
+            Expanded(
+              child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('favourites')
+                    .where('userId', isEqualTo: auth.currentUser!.uid)
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasError) {
+                    return const Center(child: Text('Bir hata oluştu'));
+                  }
+                  if (snapshot.data!.docs.isEmpty) {
+                    return const Center(
+                        child: Text('Favori duyuru bulunamadı'));
+                  }
+                  return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      var favorite = snapshot.data!.docs[index].data();
+                      return FutureBuilder(
+                        future: FirebaseFirestore.instance
+                            .collection('allAnounces')
+                            .doc(auth.currentUser!.uid)
+                            .get(),
+                        builder: (context,
+                            AsyncSnapshot<DocumentSnapshot> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          }
+                          if (snapshot.hasError) {
+                            return const Text('Bir hata oluştu');
+                          }
+                          if (!snapshot.hasData || !snapshot.data!.exists) {
+                            return const SizedBox.shrink();
+                          }
+                          var announce = snapshot.data!.data();
+                          return ListTile(
+                            title: Text(announce.toString()),
+                          );
+                        },
                       );
-                    });
-              },
-            );
-          },
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

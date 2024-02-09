@@ -2,7 +2,7 @@ import 'package:car_trade_hub_app/models/favouriteAnounceModel.dart';
 import 'package:flutter/material.dart';
 
 class FavouriteAnounceProvider with ChangeNotifier {
-  List<FavouriteAnounce> _favouriteAnounces = [];
+  final List<FavouriteAnounce> _favouriteAnounces = [];
 
   List<FavouriteAnounce> get favouriteAnounces => _favouriteAnounces;
 
