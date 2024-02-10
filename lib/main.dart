@@ -1,10 +1,14 @@
 import 'package:car_trade_hub_app/firebase_options.dart';
 import 'package:car_trade_hub_app/providers/carColorProvider.dart';
 import 'package:car_trade_hub_app/providers/carYearProvider.dart';
+import 'package:car_trade_hub_app/providers/changeBgColorProvider.dart';
 import 'package:car_trade_hub_app/providers/favouriteAnounceProvider.dart';
+
+import 'package:car_trade_hub_app/screens/homeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'constants/constantColors.dart';
 import 'screens/splashScreens/splashScreen.dart';
@@ -30,6 +34,9 @@ void main() async {
       ChangeNotifierProvider(
         create: (_) => FavouriteAnounceProvider(),
       ),
+      ChangeNotifierProvider(
+        create: (_) => ChangeBgColorProvider(),
+      ),
     ],
     child: const MainApp(),
   ));
@@ -40,12 +47,16 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: ConstantColors.generalBgColor,
-      ),
-      home: const SplashScreen(),
-    );
+    return Consumer<ChangeBgColorProvider>(builder: (context, provider, child) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          scaffoldBackgroundColor: provider.isDark
+              ? ConstantColors.generalBgColor
+              : ConstantColors.whiteBgColor,
+        ),
+        home: const SplashScreen(),
+      );
+    });
   }
 }

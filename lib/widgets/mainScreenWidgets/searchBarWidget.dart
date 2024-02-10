@@ -10,21 +10,24 @@ class SearchBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-          suffixIcon: IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.search,
-                color: Colors.white,
-              )),
-          hintText: hintText,
-          hintStyle: ConstantStyles.hintTextStyle,
-          border: OutlineInputBorder(
-            borderSide: const BorderSide(color: ConstantColors.mainColor),
-            borderRadius: BorderRadius.circular(10),
-          )),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+            suffixIcon: IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.search,
+                  color: ConstantColors.greyColor,
+                )),
+            hintText: hintText,
+            hintStyle: ConstantStyles.hintTextStyle,
+            border: OutlineInputBorder(
+              borderSide: const BorderSide(color: ConstantColors.mainColor),
+              borderRadius: BorderRadius.circular(10),
+            )),
+      ),
     );
   }
 }

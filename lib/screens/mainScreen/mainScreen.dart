@@ -48,7 +48,8 @@ class _MainScreenState extends State<MainScreen> {
         body: Column(
           children: [
             const SizedBox(height: 10),
-            SearchBarWidget(hintText: 'Search cars', controller: controller),
+            SearchBarWidget(
+                hintText: 'Search cars for brands', controller: controller),
             const SizedBox(height: 10),
             Expanded(
               child: StreamBuilder(
@@ -89,30 +90,35 @@ class _MainScreenState extends State<MainScreen> {
                               ),
                             );
                           },
-                          child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 2),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: ConstantColors.mainColor,
-                                    width: 2,
-                                  )),
-                              child: Column(
-                                children: [
-                                  CarImgWidget(
-                                    base64Image: anounce.get('carImg'),
-                                    heightSize: 10,
-                                  ),
-                                  Text(
-                                    anounce.get('carPrice') + ' AZN',
-                                  ),
-                                  Text(anounce.get('carBrand')),
-                                  Text(anounce.get('carYear').toString()),
-                                  Text(anounce.get('carMilage') + ' KM'),
-                                  Expanded(child: Text(anounce.get('carLoc'))),
-                                ],
-                              )),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 2),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: ConstantColors.mainColor,
+                                      width: 2,
+                                    )),
+                                child: Column(
+                                  children: [
+                                    CarImgWidget(
+                                      base64Image: anounce.get('carImg'),
+                                      heightSize: 10,
+                                    ),
+                                    Text(
+                                      anounce.get('carPrice') + ' AZN',
+                                    ),
+                                    Text(anounce.get('carBrand')),
+                                    Text(anounce.get('carYear').toString()),
+                                    Text(anounce.get('carMilage') + ' KM'),
+                                    Expanded(
+                                        child: Text(anounce.get('carLoc'))),
+                                  ],
+                                )),
+                          ),
                         );
                       },
                     );

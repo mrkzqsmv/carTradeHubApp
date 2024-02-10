@@ -1,4 +1,3 @@
-import 'package:car_trade_hub_app/widgets/mainScreenWidgets/carImgWIdget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +40,8 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
           children: [
             const SizedBox(height: 10),
             SearchBarWidget(
-                hintText: 'Search cars', controller: favouriteCarController),
+                hintText: 'Search cars for brands',
+                controller: favouriteCarController),
             const SizedBox(height: 10),
             Expanded(
               child: StreamBuilder(

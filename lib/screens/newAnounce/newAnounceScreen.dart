@@ -136,11 +136,11 @@ class _NewAnounceScreenState extends State<NewAnounceScreen> {
                         const SizedBox(height: 10),
                         AnounceTextFormFieldWidget(
                             hintText: 'Type your email address for contact...',
-                            controller: yourPhoneNumberController),
+                            controller: yourEmailAddressController),
                         const SizedBox(height: 10),
                         AnounceTextFormFieldWidget(
                             hintText: 'Type your phone number for contact...',
-                            controller: yourEmailAddressController),
+                            controller: yourPhoneNumberController),
                         const SizedBox(height: 10),
                         AnounceTextFormFieldWidget(
                             hintText: 'Type car additional information...',
