@@ -28,6 +28,7 @@ class _AnnounceDetailScreenState extends State<AnnounceDetailScreen> {
   bool isZoomed = false;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
+  bool isFavourite = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,19 +45,15 @@ class _AnnounceDetailScreenState extends State<AnnounceDetailScreen> {
           actions: [
             IconButton(
               onPressed: () async {
-                Provider.of<FavouriteAnounceProvider>(context, listen: false)
-                    .addToFavourites(FavouriteAnounce(
-                        anounceID: widget.userID, userID: widget.userID));
-
-                await firestore
-                    .collection('favourites')
-                    .doc(auth.currentUser!.uid)
-                    .set({
-                  'anounceId': widget.userID,
-                  'userId': widget.userID,
+                setState(() {
+                  isFavourite = !isFavourite;
                 });
+
+                isFavourite ? addFavourite() : removeFavourite();
               },
-              icon: const Icon(Icons.favorite_outline_rounded),
+              icon: isFavourite
+                  ? const Icon(Icons.favorite)
+                  : const Icon(Icons.favorite_outline_outlined),
             ),
           ],
         ),
@@ -129,8 +126,8 @@ class _AnnounceDetailScreenState extends State<AnnounceDetailScreen> {
                   btnText: 'Contact to Seller with Email',
                   btnFunc: () async {
                     final Uri emailLaunchUri = Uri(
-                      scheme: 'mailto',
-                      path: widget.announce.get('phoneNumber'),
+                      scheme: 'email',
+                      path: widget.announce.get('emailAddress'),
                       query: encodeQueryParameters(<String, String>{
                         'subject': 'Example Subject & Symbols are allowed!',
                       }),
@@ -144,7 +141,7 @@ class _AnnounceDetailScreenState extends State<AnnounceDetailScreen> {
                 btnFunc: () async {
                   final Uri emailLaunchUri = Uri(
                     scheme: 'tel',
-                    path: widget.announce.get('emailAddress'),
+                    path: widget.announce.get('phoneNumber'),
                   );
 
                   launcher.launchUrl(emailLaunchUri);
@@ -163,5 +160,23 @@ class _AnnounceDetailScreenState extends State<AnnounceDetailScreen> {
         .map((MapEntry<String, String> e) =>
             '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
         .join('&');
+  }
+
+  Future<void> addFavourite() async {
+    try {
+      await firestore
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .collection('favAnnounces')
+          .add({'favAnnounceID': widget.announce.id});
+    } catch (e) {
+      debugPrint('ERROR FAILED ADDED FAVOURITE $e');
+    }
+  }
+
+  Future<void> removeFavourite() async {
+    try {} catch (e) {
+      debugPrint('ERROR FAILED REMOVE FAVOURITE $e');
+    }
   }
 }

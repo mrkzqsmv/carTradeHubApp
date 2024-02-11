@@ -1,6 +1,6 @@
-class FavouriteAnounce {
-  final String anounceID;
+class FavouriteAnnounce {
+  final String announceID;
   final String userID;
 
-  FavouriteAnounce({required this.anounceID, required this.userID});
+  FavouriteAnnounce({required this.announceID, required this.userID});
 }

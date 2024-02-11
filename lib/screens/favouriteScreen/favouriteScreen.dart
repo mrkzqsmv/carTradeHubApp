@@ -43,6 +43,9 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 hintText: 'Search cars for brands',
                 controller: favouriteCarController),
             const SizedBox(height: 10),
+            
+              
+            
           ],
         ),
       ),

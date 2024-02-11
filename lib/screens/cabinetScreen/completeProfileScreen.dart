@@ -18,7 +18,6 @@ class CompleteProfile extends StatefulWidget {
 }
 
 class _CompleteProfileState extends State<CompleteProfile> {
-  @override
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();

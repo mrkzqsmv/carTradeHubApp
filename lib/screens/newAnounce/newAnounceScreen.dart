@@ -13,7 +13,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 import '../../constants/constantColors.dart';
 import '../../constants/constantStyles.dart';
 
@@ -92,6 +91,7 @@ class _NewAnounceScreenState extends State<NewAnounceScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
                             decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
                                 border: Border.all(
                                     color: ConstantColors.mainColor)),
                             width: double.infinity,
@@ -239,6 +239,8 @@ class _NewAnounceScreenState extends State<NewAnounceScreen> {
           .doc(userId)
           .collection('announcements')
           .add(data);
+
+      await firestore.collection('allAnnounces').add(data);
     } catch (e) {
       print(e);
     }

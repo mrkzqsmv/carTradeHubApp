@@ -3,7 +3,6 @@ import 'package:car_trade_hub_app/widgets/mainScreenWidgets/carImgWIdget.dart';
 import 'package:car_trade_hub_app/widgets/mainScreenWidgets/searchBarWidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import '../../constants/constantColors.dart';
 import 'anounceDetail.dart';
@@ -54,40 +53,69 @@ class _MainScreenState extends State<MainScreen> {
                 hintText: 'Search cars for brands', controller: controller),
             const SizedBox(height: 10),
             Expanded(
-              child: StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection('users').snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+              child: StreamBuilder(
+                stream: firestore.collection('allAnnounces').snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const CircularProgressIndicator();
                   }
 
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Text('Bir hata oluştu: ${snapshot.error}'),
-                    );
-                  }
+                  var allAnnounces = snapshot.data!.docs;
 
-                  if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
-                    return const Center(
-                      child: Text('Hiç ilan yok'),
-                    );
-                  }
-
-                  return ListView(
-                    children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data =
-                          document.data() as Map<String, dynamic>;
-                      return ListTile(
-                        title: Text(data['carBrand'].toString()),
-                        subtitle: Text(data['carModel'].toString()),
-                      );
-                    }).toList(),
-                  );
+                  return GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 8.0,
+                        mainAxisSpacing: 8.0,
+                        childAspectRatio: 1.0,
+                      ),
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        var announce = allAnnounces[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => AnnounceDetailScreen(
+                                  announce: announce,
+                                  userID: announce.id,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 2),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: ConstantColors.mainColor,
+                                      width: 2,
+                                    )),
+                                child: Column(
+                                  children: [
+                                    CarImgWidget(
+                                      base64Image: announce.get('carImg'),
+                                      heightSize: 10,
+                                    ),
+                                    Text(
+                                      announce.get('carPrice') + ' AZN',
+                                    ),
+                                    Text(announce.get('carBrand')),
+                                    Text(announce.get('carYear').toString()),
+                                    Text(announce.get('carMileage') + ' KM'),
+                                    Expanded(
+                                        child: Text(announce.get('carLoc'))),
+                                  ],
+                                )),
+                          ),
+                        );
+                      });
                 },
               ),
             ),
@@ -97,3 +125,5 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
+
+

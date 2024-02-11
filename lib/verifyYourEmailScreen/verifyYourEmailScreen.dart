@@ -1,5 +1,6 @@
 import 'package:car_trade_hub_app/constants/constantColors.dart';
 import 'package:car_trade_hub_app/constants/constantStyles.dart';
+import 'package:car_trade_hub_app/screens/loginScreens/loginScreen.dart';
 import 'package:car_trade_hub_app/widgets/splashScreenWidgets/splashScreenCarWidget.dart';
 import 'package:car_trade_hub_app/widgets/splashScreenWidgets/splashScreenNextBtn.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -51,6 +52,12 @@ class VerifyYourEmailScreen extends StatelessWidget {
                           content: Text('We sent you verification code'),
                         ),
                       );
+
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const LoginScreen()),
+                          (route) => false);
                     }).catchError((err) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
