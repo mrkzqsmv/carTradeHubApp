@@ -25,6 +25,7 @@ dependencies:
   connectivity_plus: ^5.0.2
   get: ^4.6.6
   easy_localization: ^3.0.3
+  uuid: ^4.3.3
 
 dev_dependencies:
   flutter_test:

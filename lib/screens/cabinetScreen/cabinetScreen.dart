@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'dart:convert';
 import 'dart:io';
+import 'package:car_trade_hub_app/screens/cabinetScreen/yourAllAnnouncements.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -126,6 +127,26 @@ class _CabinetScreenState extends State<CabinetScreen> {
                       ),
                     );
                   }),
+              const SizedBox(height: 10),
+              const Divider(),
+              const SizedBox(height: 10),
+              const Text(
+                'Created all announces by you',
+                style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              SplashScreenNextBtn(
+                  btnText: 'See your all the announcements',
+                  btnFunc: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const YourAllAnnouncementsScreen()));
+                  })
             ],
           ),
         ),

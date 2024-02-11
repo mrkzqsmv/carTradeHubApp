@@ -11,20 +11,20 @@ import '../../constants/constantStyles.dart';
 import '../../widgets/mainScreenWidgets/carImgWIdget.dart';
 import '../../widgets/splashScreenWidgets/splashScreenNextBtn.dart';
 
-class AnounceDetailScreen extends StatefulWidget {
-  final QueryDocumentSnapshot anounce;
+class AnnounceDetailScreen extends StatefulWidget {
+  final QueryDocumentSnapshot announce;
   final String userID;
-  const AnounceDetailScreen({
+  const AnnounceDetailScreen({
     Key? key,
-    required this.anounce,
+    required this.announce,
     required this.userID,
   }) : super(key: key);
 
   @override
-  State<AnounceDetailScreen> createState() => _AnounceDetailScreenState();
+  State<AnnounceDetailScreen> createState() => _AnnounceDetailScreenState();
 }
 
-class _AnounceDetailScreenState extends State<AnounceDetailScreen> {
+class _AnnounceDetailScreenState extends State<AnnounceDetailScreen> {
   bool isZoomed = false;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -75,7 +75,7 @@ class _AnounceDetailScreenState extends State<AnounceDetailScreen> {
                   decoration: BoxDecoration(
                       border: Border.all(color: ConstantColors.mainColor)),
                   child: CarImgWidget(
-                    base64Image: widget.anounce.get('carImg'),
+                    base64Image: widget.announce.get('carImg'),
                     heightSize: isZoomed ? 2 : 4,
                   ),
                 ),
@@ -87,36 +87,38 @@ class _AnounceDetailScreenState extends State<AnounceDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${'Car Price: ' + widget.anounce.get('carPrice')} AZN',
+                      '${'Car Price: ' + widget.announce.get('carPrice')} AZN',
                       style: ConstantStyles.appBarTitleStyle,
                     ),
                     Text(
-                      'Car Brand: ' + widget.anounce.get('carBrand'),
+                      'Car Brand: ' + widget.announce.get('carBrand'),
                       style: ConstantStyles.appBarTitleStyle,
                     ),
                     Text(
-                      'Car Model: ' + widget.anounce.get('carModel'),
+                      'Car Model: ' + widget.announce.get('carModel'),
                       style: ConstantStyles.appBarTitleStyle,
                     ),
                     Text(
-                      'Car Year: ' + widget.anounce.get('carYear').toString(),
+                      'Car Year: ' + widget.announce.get('carYear').toString(),
                       style: ConstantStyles.appBarTitleStyle,
                     ),
                     Text(
-                      'Car Mileage: ' + widget.anounce.get('carMilage') + ' KM',
+                      'Car Mileage: ' +
+                          widget.announce.get('carMileage') +
+                          ' KM',
                       style: ConstantStyles.appBarTitleStyle,
                     ),
                     Text(
-                      'Car Color: ' + widget.anounce.get('carColor'),
+                      'Car Color: ' + widget.announce.get('carColor'),
                       style: ConstantStyles.appBarTitleStyle,
                     ),
                     Text(
-                      'Car Location: ' + widget.anounce.get('carLoc'),
+                      'Car Location: ' + widget.announce.get('carLoc'),
                       style: ConstantStyles.appBarTitleStyle,
                     ),
                     Text(
                       'Car Additional Info: ' +
-                          widget.anounce.get('carAdditionalInfo'),
+                          widget.announce.get('carAdditionalInfo'),
                       style: ConstantStyles.appBarTitleStyle,
                     ),
                   ],
@@ -128,7 +130,7 @@ class _AnounceDetailScreenState extends State<AnounceDetailScreen> {
                   btnFunc: () async {
                     final Uri emailLaunchUri = Uri(
                       scheme: 'mailto',
-                      path: widget.anounce.get('phoneNumber'),
+                      path: widget.announce.get('phoneNumber'),
                       query: encodeQueryParameters(<String, String>{
                         'subject': 'Example Subject & Symbols are allowed!',
                       }),
@@ -142,7 +144,7 @@ class _AnounceDetailScreenState extends State<AnounceDetailScreen> {
                 btnFunc: () async {
                   final Uri emailLaunchUri = Uri(
                     scheme: 'tel',
-                    path: widget.anounce.get('emailAddress'),
+                    path: widget.announce.get('emailAddress'),
                   );
 
                   launcher.launchUrl(emailLaunchUri);

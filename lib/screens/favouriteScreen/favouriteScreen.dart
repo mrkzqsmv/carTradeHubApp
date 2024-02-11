@@ -43,55 +43,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 hintText: 'Search cars for brands',
                 controller: favouriteCarController),
             const SizedBox(height: 10),
-            Expanded(
-              child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('favourites')
-                    .where('userId', isEqualTo: auth.currentUser!.uid)
-                    .snapshots(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.hasError) {
-                    return const Center(child: Text('Bir hata oluştu'));
-                  }
-                  if (snapshot.data!.docs.isEmpty) {
-                    return const Center(
-                        child: Text('Favori duyuru bulunamadı'));
-                  }
-                  return ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (context, index) {
-                      var favorite = snapshot.data!.docs[index].data();
-                      return FutureBuilder(
-                        future: FirebaseFirestore.instance
-                            .collection('allAnounces')
-                            .doc(auth.currentUser!.uid)
-                            .get(),
-                        builder: (context,
-                            AsyncSnapshot<DocumentSnapshot> snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
-                          }
-                          if (snapshot.hasError) {
-                            return const Text('Bir hata oluştu');
-                          }
-                          if (!snapshot.hasData || !snapshot.data!.exists) {
-                            return const SizedBox.shrink();
-                          }
-                          var announce = snapshot.data!.data();
-                          return ListTile(
-                            title: Text(announce.toString()),
-                          );
-                        },
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
           ],
         ),
       ),

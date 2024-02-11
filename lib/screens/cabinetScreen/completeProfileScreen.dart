@@ -1,11 +1,14 @@
 import 'package:car_trade_hub_app/constants/constantColors.dart';
 import 'package:car_trade_hub_app/constants/constantStyles.dart';
+import 'package:car_trade_hub_app/providers/changeBgColorProvider.dart';
 import 'package:car_trade_hub_app/screens/homeScreen.dart';
+import 'package:car_trade_hub_app/verifyYourEmailScreen/verifyYourEmailScreen.dart';
 import 'package:car_trade_hub_app/widgets/loginScreenWidgets/textFormFieldWidget.dart';
 import 'package:car_trade_hub_app/widgets/splashScreenWidgets/splashScreenNextBtn.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CompleteProfile extends StatefulWidget {
   const CompleteProfile({super.key});
@@ -22,6 +25,8 @@ class _CompleteProfileState extends State<CompleteProfile> {
   final TextEditingController socialMediaLinkController =
       TextEditingController();
   //Age
+
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   String userID = FirebaseAuth.instance.currentUser!.uid;
   CollectionReference users = FirebaseFirestore.instance.collection('users');
@@ -55,89 +60,104 @@ class _CompleteProfileState extends State<CompleteProfile> {
   }
 
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: ConstantColors.generalBgColor,
-          iconTheme: const IconThemeData(color: ConstantColors.mainColor),
-          title: Text(
-            'Complete your profile',
-            style: ConstantStyles.appBarTitleStyle,
-          ),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      TextFormFieldWidget(
-                          controller: fullNameController,
-                          hintText: 'Type your fullname...',
-                          isPassword: false),
-                      const SizedBox(height: 10),
-                      TextFormFieldWidget(
-                          controller: locationController,
-                          hintText: 'Type location...',
-                          isPassword: false),
-                      const SizedBox(height: 10),
-                      TextFormFieldWidget(
-                          controller: phoneNumberController,
-                          hintText: 'Type phone number...',
-                          isPassword: false),
-                      const SizedBox(height: 10),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: ConstantColors.generalBgColor,
-                              shape: RoundedRectangleBorder(
-                                side: const BorderSide(
-                                    color: ConstantColors.greyColor),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
+    return auth.currentUser!.emailVerified
+        ? SafeArea(
+            child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: ConstantColors.generalBgColor,
+                iconTheme: const IconThemeData(color: ConstantColors.mainColor),
+                title: Text(
+                  'Complete your profile',
+                  style: ConstantStyles.appBarTitleStyle,
+                ),
+                centerTitle: true,
+              ),
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 10),
+                            TextFormFieldWidget(
+                                controller: fullNameController,
+                                hintText: 'Type your fullname...',
+                                isPassword: false),
+                            const SizedBox(height: 10),
+                            TextFormFieldWidget(
+                                controller: locationController,
+                                hintText: 'Type location...',
+                                isPassword: false),
+                            const SizedBox(height: 10),
+                            TextFormFieldWidget(
+                                controller: phoneNumberController,
+                                hintText: 'Type phone number...',
+                                isPassword: false),
+                            const SizedBox(height: 10),
+                            Container(
+                              width: double.infinity,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        Provider.of<ChangeBgColorProvider>(
+                                                    context)
+                                                .isDark
+                                            ? ConstantColors.generalBgColor
+                                            : ConstantColors.whiteBgColor,
+                                    shape: RoundedRectangleBorder(
+                                      side: const BorderSide(
+                                          color: ConstantColors.greyColor),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    _selectDate(context);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20),
+                                    child: Text(
+                                      selectedDate.toString(),
+                                      style: const TextStyle(
+                                          color: ConstantColors.mainColor),
+                                    ),
+                                  )),
                             ),
-                            onPressed: () {
-                              _selectDate(context);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              child: Text(
-                                selectedDate.toString(),
-                                style: const TextStyle(
-                                    color: ConstantColors.mainColor),
-                              ),
-                            )),
-                      ),
-                      const SizedBox(height: 10),
-                      TextFormFieldWidget(
-                          controller: socialMediaLinkController,
-                          hintText: 'Type any social media link...(optional)',
-                          isPassword: false),
-                      const SizedBox(height: 10),
-                      SplashScreenNextBtn(
-                          btnText: 'Complete profile',
-                          btnFunc: () {
-                            if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save();
-                              completeProfile(userID);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const HomeScreen()));
-                            }
-                          })
-                    ],
-                  ))
-            ],
-          ),
-        ),
-      ),
-    );
+                            const SizedBox(height: 10),
+                            TextFormFieldWidget(
+                                controller: socialMediaLinkController,
+                                hintText:
+                                    'Type any social media link...(optional)',
+                                isPassword: false),
+                            const SizedBox(height: 10),
+                            SplashScreenNextBtn(
+                                btnText: 'Complete profile',
+                                btnFunc: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    _formKey.currentState!.save();
+                                    completeProfile(userID);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                const HomeScreen()));
+                                  }
+                                })
+                          ],
+                        ))
+                  ],
+                ),
+              ),
+            ),
+          )
+        : const VerifyYourEmailScreen(
+            text:
+                'If you want to complete your profile, please verify your email address once.',
+            isBack: true,
+          );
   }
 
   Future<void> completeProfile(
