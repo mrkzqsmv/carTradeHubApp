@@ -1,6 +1,7 @@
 import 'package:car_trade_hub_app/constants/constantStyles.dart';
 import 'package:car_trade_hub_app/widgets/mainScreenWidgets/carImgWIdget.dart';
 import 'package:car_trade_hub_app/widgets/mainScreenWidgets/searchBarWidget.dart';
+import 'package:car_trade_hub_app/widgets/splashScreenWidgets/splashScreenNextBtn.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -38,9 +39,11 @@ class _MainScreenState extends State<MainScreen> {
           ),
           actions: [
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                showSnackBar();
+              },
               child: Text(
-                'Cities',
+                'Filter',
                 style: ConstantStyles.appBarActionBtnStyle,
               ),
             ),
@@ -124,6 +127,35 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
+
+  void showSnackBar() {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+              height: MediaQuery.of(context).size.height / 3,
+              width: double.infinity,
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text('Evvelce ucuz',
+                          style: ConstantStyles.textButtonStyle)),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text('Evvelce baha',
+                          style: ConstantStyles.textButtonStyle)),
+                  const Spacer(),
+                  SplashScreenNextBtn(
+                      btnText: 'Apply',
+                      btnFunc: () {
+                        //I will delete here
+                        Navigator.of(context).pop();
+                      }),
+                  const SizedBox(height: 10),
+                ],
+              ));
+        });
+  }
 }
-
-

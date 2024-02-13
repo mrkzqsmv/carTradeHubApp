@@ -12,8 +12,9 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<!-- App Name is here -->
 	<key>CFBundleName</key>
-	<string>car_trade_hub_app</string>
+	<string>Car Trade</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

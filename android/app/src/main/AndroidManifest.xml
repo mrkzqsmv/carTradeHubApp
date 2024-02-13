@@ -26,8 +26,9 @@
         <action android:name="android.support.customtabs.action.CustomTabsService" />
     </intent>
     </queries>
+    <!-- App name is here -->
     <application
-        android:label="car_trade_hub_app"
+        android:label="Car Trade"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -4,27 +4,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart' as launcher;
 import '../../constants/constantColors.dart';
 import '../../constants/constantStyles.dart';
 import '../../widgets/mainScreenWidgets/carImgWIdget.dart';
 import '../../widgets/splashScreenWidgets/splashScreenNextBtn.dart';
 
-class AnnounceDetailScreen extends StatefulWidget {
+class FavouriteDetailScreen extends StatefulWidget {
   final QueryDocumentSnapshot announce;
   final String userID;
-  const AnnounceDetailScreen({
+  const FavouriteDetailScreen({
     Key? key,
     required this.announce,
     required this.userID,
   }) : super(key: key);
 
   @override
-  State<AnnounceDetailScreen> createState() => _AnnounceDetailScreenState();
+  State<FavouriteDetailScreen> createState() => _FavouriteDetailScreenState();
 }
 
-class _AnnounceDetailScreenState extends State<AnnounceDetailScreen> {
+class _FavouriteDetailScreenState extends State<FavouriteDetailScreen> {
   bool isZoomed = false;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -45,13 +44,11 @@ class _AnnounceDetailScreenState extends State<AnnounceDetailScreen> {
           actions: [
             IconButton(
               onPressed: () async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
                 setState(() {
                   isFavourite = !isFavourite;
                 });
 
                 isFavourite ? addFavourite() : removeFavourite();
-                await prefs.setBool('isFavourite', isFavourite);
               },
               icon: isFavourite
                   ? const Icon(Icons.favorite)
@@ -147,6 +144,21 @@ class _AnnounceDetailScreenState extends State<AnnounceDetailScreen> {
                   );
 
                   launcher.launchUrl(emailLaunchUri);
+                },
+              ),
+              const SizedBox(height: 15),
+              SplashScreenNextBtn(
+                btnText: 'DELETE FROM MY FAVOURITES LIST',
+                btnFunc: () {
+                  try {
+                    Provider.of<FavouriteAnnounceProvider>(context,
+                            listen: false)
+                        .removeFromFavourites(widget.announce.id);
+
+                    Navigator.pop(context);
+                  } catch (e) {
+                    print(e);
+                  }
                 },
               ),
               const SizedBox(height: 15),

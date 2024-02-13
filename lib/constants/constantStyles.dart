@@ -68,4 +68,10 @@ class ConstantStyles {
   //Search bar hint style in main and favourite screens
   static TextStyle searchBarHintStyle = GoogleFonts.agdasima(
       color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold);
+
+  //filter field text button styles in main screen
+  static TextStyle textButtonStyle = GoogleFonts.agdasima(
+      color: ConstantColors.mainColor,
+      fontSize: 30,
+      fontWeight: FontWeight.bold);
 }
