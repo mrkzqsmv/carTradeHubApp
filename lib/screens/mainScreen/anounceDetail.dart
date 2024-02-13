@@ -150,6 +150,13 @@ class _AnnounceDetailScreenState extends State<AnnounceDetailScreen> {
                 },
               ),
               const SizedBox(height: 15),
+              SplashScreenNextBtn(
+                btnText: 'DELETE THIS CAR FROM MY CREATED ANNOUNCES',
+                btnFunc: () async {
+                  //this feature dont work
+                },
+              ),
+              const SizedBox(height: 15),
             ],
           ),
         )),
