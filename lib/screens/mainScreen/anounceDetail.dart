@@ -128,7 +128,7 @@ class _AnnounceDetailScreenState extends State<AnnounceDetailScreen> {
                   btnText: 'Contact to Seller with Email',
                   btnFunc: () async {
                     final Uri emailLaunchUri = Uri(
-                      scheme: 'email',
+                      scheme: 'mailto',
                       path: widget.announce.get('emailAddress'),
                       query: encodeQueryParameters(<String, String>{
                         'subject': 'Example Subject & Symbols are allowed!',
