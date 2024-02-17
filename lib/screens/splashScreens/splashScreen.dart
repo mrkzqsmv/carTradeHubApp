@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:car_trade_hub_app/widgets/splashScreenWidgets/splashScreenAnimationWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import '../../constants/constantStyles.dart';
 import '../../widgets/splashScreenWidgets/splashScreenCarWidget.dart';
 import 'firstSplashScreen.dart';
@@ -25,11 +27,13 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
+        body: Card(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SplashScreenCarWidget(path: 'assets/svg/firstCarSvg.svg'),
+              const SplashScreenAnimationScreen(
+                  animationPath:
+                      'assets/animations/splashScreenCarLottie.json'),
               Text(
                 'Car Trade Hub App',
                 style: ConstantStyles.appNameStyle,
