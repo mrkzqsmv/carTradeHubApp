@@ -1,3 +1,4 @@
+import 'package:car_trade_hub_app/checkBatteryPercentage/checkBatteryPercentage.dart';
 import 'package:car_trade_hub_app/firebase_options.dart';
 import 'package:car_trade_hub_app/providers/carColorProvider.dart';
 import 'package:car_trade_hub_app/providers/carYearProvider.dart';
@@ -35,6 +36,9 @@ void main() async {
       ChangeNotifierProvider(
         create: (_) => ChangeBgColorProvider(),
       ),
+      ChangeNotifierProvider(
+        create: (_) => CheckBatteryPercentageProvider(),
+      ),
     ],
     child: const MainApp(),
   ));
@@ -53,7 +57,7 @@ class MainApp extends StatelessWidget {
               ? ConstantColors.generalBgColor
               : ConstantColors.whiteBgColor,
         ),
-        home: const SuccessWidget(),
+        home: const SplashScreen(),
       );
     });
   }

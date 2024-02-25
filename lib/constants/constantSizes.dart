@@ -9,3 +9,7 @@ class ConstantsSizes {
     return MediaQuery.of(context).size.height;
   }
 }
+
+
+//BATTERY
+//INTERNET CONNECTIONS
