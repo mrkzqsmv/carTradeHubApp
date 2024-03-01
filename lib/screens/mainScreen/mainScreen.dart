@@ -2,7 +2,6 @@
 
 import 'dart:async';
 
-import 'package:battery_plus/battery_plus.dart';
 import 'package:car_trade_hub_app/checkBatteryPercentage/checkBatteryPercentage.dart';
 import 'package:car_trade_hub_app/constants/constantStyles.dart';
 import 'package:car_trade_hub_app/widgets/mainScreenWidgets/carImgWIdget.dart';
@@ -27,28 +26,28 @@ class _MainScreenState extends State<MainScreen> {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   //For notifiying user
-  late Timer _timer;
+  // late Timer _timer;
 
   @override
   void dispose() {
     controller.dispose();
-    _timer.cancel();
+    // _timer.cancel();
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
-      _checkBattery();
-    });
+    // _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+    //   _checkBattery();
+    // });
   }
 
-  _checkBattery() {
-    final batteryProvider =
-        Provider.of<CheckBatteryPercentageProvider>(context, listen: false);
-    batteryProvider.checkBattery(context);
-  }
+  // _checkBattery() {
+  //   final batteryProvider =
+  //       Provider.of<CheckBatteryPercentageProvider>(context, listen: false);
+  //   batteryProvider.checkBattery(context);
+  // }
 
   @override
   Widget build(BuildContext context) {

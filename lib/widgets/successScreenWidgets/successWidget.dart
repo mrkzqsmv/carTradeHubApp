@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-
 class SuccessWidget extends StatelessWidget {
   const SuccessWidget({super.key});
 
@@ -10,7 +8,7 @@ class SuccessWidget extends StatelessWidget {
       child: Scaffold(
         body: Center(
           child: TextButton(
-            child: Text('Show Modal'),
+            child: const Text('Show Modal'),
             onPressed: () {
               
             },

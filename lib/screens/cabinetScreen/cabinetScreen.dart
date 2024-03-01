@@ -53,101 +53,103 @@ class _CabinetScreenState extends State<CabinetScreen> {
           centerTitle: true,
         ),
         body: Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 40),
-              GestureDetector(
-                onTap: () {
-                  _pickImgFromGalleryAndUploadFirestore();
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width / 3,
-                  height: MediaQuery.of(context).size.height / 6.5,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 40),
+                GestureDetector(
+                  onTap: () {
+                    _pickImgFromGalleryAndUploadFirestore();
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 3,
+                    height: MediaQuery.of(context).size.height / 6.5,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: profileImageBase64 != null
+                        ? Image.memory(
+                            base64Decode(profileImageBase64!),
+                            width: 200,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          )
+                        : SvgPicture.asset('assets/svg/userSvg.svg'),
                   ),
-                  child: profileImageBase64 != null
-                      ? Image.memory(
-                          base64Decode(profileImageBase64!),
-                          width: 200,
-                          height: 200,
-                          fit: BoxFit.cover,
-                        )
-                      : SvgPicture.asset('assets/svg/userSvg.svg'),
                 ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                auth.currentUser!.email.toString(),
-                style: GoogleFonts.agdasima(
-                  color: ConstantColors.mainColor,
-                  fontSize: 30,
+                const SizedBox(height: 10),
+                Text(
+                  auth.currentUser!.email.toString(),
+                  style: GoogleFonts.agdasima(
+                    color: ConstantColors.mainColor,
+                    fontSize: 30,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              SplashScreenNextBtn(
-                  btnText: 'Sign Out',
-                  btnFunc: () async {
-                    try {
-                      if (auth.currentUser == null) return;
-                      await auth.signOut();
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const LoginScreen()),
-                          (route) => false);
-                    } catch (e) {
-                      debugPrint('FAILED SIGN OUT $e');
-                    }
-                  }),
-              const SizedBox(height: 10),
-              SplashScreenNextBtn(
-                  btnText: 'Delete My Account',
-                  btnFunc: () async {
-                    try {
-                      if (auth.currentUser == null) return;
-                      await auth.currentUser!.delete();
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const RegisterScreen()),
-                          (route) => false);
-                    } catch (e) {
-                      debugPrint('FAILED DELETED ACCOUNT $e');
-                    }
-                  }),
-              const SizedBox(height: 10),
-              SplashScreenNextBtn(
-                  btnText: 'Complete your profile',
-                  btnFunc: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const CompleteProfile(),
-                      ),
-                    );
-                  }),
-              const SizedBox(height: 10),
-              const Divider(),
-              const SizedBox(height: 10),
-              const Text(
-                'Created all announces by you',
-                style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              SplashScreenNextBtn(
-                  btnText: 'See your all the announcements',
-                  btnFunc: () {
-                    Navigator.push(
+                const SizedBox(height: 10),
+                SplashScreenNextBtn(
+                    btnText: 'Sign Out',
+                    btnFunc: () async {
+                      try {
+                        if (auth.currentUser == null) return;
+                        await auth.signOut();
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const LoginScreen()),
+                            (route) => false);
+                      } catch (e) {
+                        debugPrint('FAILED SIGN OUT $e');
+                      }
+                    }),
+                const SizedBox(height: 10),
+                SplashScreenNextBtn(
+                    btnText: 'Delete My Account',
+                    btnFunc: () async {
+                      try {
+                        if (auth.currentUser == null) return;
+                        await auth.currentUser!.delete();
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const RegisterScreen()),
+                            (route) => false);
+                      } catch (e) {
+                        debugPrint('FAILED DELETED ACCOUNT $e');
+                      }
+                    }),
+                const SizedBox(height: 10),
+                SplashScreenNextBtn(
+                    btnText: 'Complete your profile',
+                    btnFunc: () {
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                const YourAllAnnouncementsScreen()));
-                  })
-            ],
+                          builder: (_) => const CompleteProfile(),
+                        ),
+                      );
+                    }),
+                const SizedBox(height: 10),
+                const Divider(),
+                const SizedBox(height: 10),
+                const Text(
+                  'Created all announces by you',
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                SplashScreenNextBtn(
+                    btnText: 'See your all the announcements',
+                    btnFunc: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const YourAllAnnouncementsScreen()));
+                    })
+              ],
+            ),
           ),
         ),
       ),

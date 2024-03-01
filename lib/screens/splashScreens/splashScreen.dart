@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:car_trade_hub_app/widgets/splashScreenWidgets/splashScreenAnimationWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import '../../constants/constantStyles.dart';
-import '../../widgets/splashScreenWidgets/splashScreenCarWidget.dart';
 import 'firstSplashScreen.dart';
 
 class SplashScreen extends StatefulWidget {

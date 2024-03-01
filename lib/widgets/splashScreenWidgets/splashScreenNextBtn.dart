@@ -22,6 +22,7 @@ class SplashScreenNextBtn extends StatelessWidget {
           child: Text(
             btnText,
             style: ConstantStyles.btnTitleStyle,
+            textAlign: TextAlign.center,
           ),
         ),
       ),
