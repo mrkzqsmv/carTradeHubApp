@@ -4,14 +4,11 @@ import 'package:car_trade_hub_app/providers/carColorProvider.dart';
 import 'package:car_trade_hub_app/providers/carYearProvider.dart';
 import 'package:car_trade_hub_app/providers/changeBgColorProvider.dart';
 import 'package:car_trade_hub_app/providers/favouriteAnounceProvider.dart';
-import 'package:car_trade_hub_app/screens/loginScreens/loginScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'constants/constantColors.dart';
-import 'routes/router.dart';
 import 'screens/splashScreens/splashScreen.dart';
 
 void main() async {

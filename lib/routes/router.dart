@@ -2,6 +2,7 @@ import 'package:car_trade_hub_app/screens/splashScreens/firstSplashScreen.dart';
 import 'package:car_trade_hub_app/screens/splashScreens/secondSplashScreen.dart';
 import 'package:car_trade_hub_app/screens/splashScreens/splashScreen.dart';
 import 'package:car_trade_hub_app/screens/splashScreens/thirdSplashScreen.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(
@@ -23,3 +24,11 @@ final GoRouter router = GoRouter(
         builder: (context, state) => const ThirdSplashScreen()),
   ],
 );
+
+enum Router {
+  SPLASHSCREEN1,
+  SPLASHSCREEN2,
+  SPLASHSCREEN3,
+  LOGIN_PAGE,
+  REGISTER_PAGE,
+}
